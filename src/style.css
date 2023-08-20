@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
+body {
+  font-family: 'Roboto Condensed';
+}
+
+.breed-select {
+  max-width: 300px;
+  margin: 50px auto;
+}
+
+.js-cat-img {
+  width: 50%;
+  border-radius: 10%;
+}
+
+.cat-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  margin: 10px auto;
+
+  width: 1000px;
+}
+
+wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: rgba(255, 0, 0, 0.707);
+}
+
+.loader {
+  font-size: 0;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  margin: 0 auto;
+  width: 50px;
+  height: 50px;
+}
+
+.loader:before,
+.loader:after {
+  content: '';
+  border-radius: 50%;
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3) inset;
+}
+.loader:after {
+  box-shadow: 0 2px 0 #ff3d00 inset;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.is-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
