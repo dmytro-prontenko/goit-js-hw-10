@@ -15,6 +15,7 @@ const refs = {
 };
 
 refs.select.addEventListener('change', onSelectChange);
+refs.select.classList.toggle('is-hidden');
 refs.loader.classList.toggle('is-hidden');
 refs.error.classList.toggle('is-hidden');
 
@@ -25,44 +26,57 @@ function onSelectChange(event) {
 
   fetchCatByBreed(currentOption)
     .then(data => {
-      refs.loader.classList.toggle('is-hidden');
-      refs.catInfo.classList.toggle('is-hidden');
+      // refs.loader.classList.toggle('is-hidden');
+      // refs.catInfo.classList.toggle('is-hidden');
       createCardInfo(data);
     })
     .catch(err => {
-      refs.catInfo.classList.toggle('is-hidden');
-      refs.loader.classList.add('is-hidden');
+      // refs.catInfo.classList.toggle('is-hidden');
+      // refs.loader.classList.toggle('is-hidden');
       refs.catInfo.innerHTML = '';
 
       Notiflix.Notify.failure(
         'Oops! Something went wrong! Try choose another breed!'
       );
       console.log(err);
-    });
+    })
+    .finally(
+      setTimeout(
+        (refs.loader.classList.toggle('is-hidden'),
+        refs.catInfo.classList.toggle('is-hidden')),
+        500
+      )
+    );
 }
 export const BREEDS_URL = `https://api.thecatapi.com/v1/breeds`;
 export const IMAGES_URL = `https://api.thecatapi.com/v1/images`;
 
-fetchBreeds(BREEDS_URL)
-  .then(data => {
-    refs.loader.classList.toggle('is-hidden');
-    refs.select.insertAdjacentHTML('beforeend', createSelectMarkup(data));
-    new SlimSelect({
-      select: refs.select,
-    });
-    refs.loader.classList.toggle('is-hidden');
+// refs.loader.classList.add('is-hidden');
+setTimeout(
+  fetchBreeds(BREEDS_URL)
+    .then(data => {
+      refs.loader.classList.toggle('is-hidden'),
+        refs.select.classList.toggle('is-hidden'),
+        refs.select.insertAdjacentHTML('beforeend', createSelectMarkup(data));
+      new SlimSelect({
+        select: refs.select,
+      });
+      refs.loader.classList.toggle('is-hidden');
 
-    return data;
-  })
-  .catch(err => {
-    refs.loader.classList.add('is-hidden');
-    refs.select.classList.toggle('is-hidden');
+      return data;
+    })
+    .catch(err => {
+      refs.loader.classList.add('is-hidden');
+      refs.select.classList.toggle('is-hidden');
 
-    Notiflix.Notify.failure(
-      'Oops! Something went wrong! Try reloading the page!'
-    );
-    console.log(err);
-  });
+      Notiflix.Notify.failure(
+        'Oops! Something went wrong! Try reloading the page!'
+      );
+      console.log(err);
+    })
+    .finally(refs.loader.classList.add('is-hidden')),
+  2000
+);
 
 function createSelectMarkup(arr) {
   return arr
