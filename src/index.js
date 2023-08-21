@@ -74,7 +74,7 @@ setTimeout(
       );
       console.log(err);
     })
-    .finally(refs.loader.classList.add('is-hidden')),
+    .finally(setTimeout(refs.loader.classList.add('is-hidden')), 500),
   2000
 );
 
